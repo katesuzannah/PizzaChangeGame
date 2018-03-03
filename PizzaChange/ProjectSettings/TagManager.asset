@@ -7,6 +7,8 @@ TagManager:
   - Pickup
   - Door
   - Drawer
+  - Money
+  - GameManager
   layers:
   - Default
   - TransparentFX
