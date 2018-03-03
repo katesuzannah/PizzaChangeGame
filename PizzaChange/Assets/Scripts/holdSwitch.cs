@@ -8,9 +8,10 @@ public class holdSwitch : MonoBehaviour {
 	GameObject currentlyHeld;
 	Rigidbody currentRB;
 	Collider[] currentColliders;
+	GameManager gm;
 
 	void Start () {
-
+		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager>();
 	}
 
 	void Update () {
@@ -44,6 +45,8 @@ public class holdSwitch : MonoBehaviour {
 				}
 				if (rayHit.collider.tag == "Money") {
 					rayHit.collider.gameObject.GetComponent<Money> ().Collect ();
+					gm.playerAudio.clip = gm.moneyAudio;
+					gm.playerAudio.Play ();
 				}
 			}
 		}
