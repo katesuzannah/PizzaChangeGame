@@ -38,7 +38,7 @@ public class holdSwitch : MonoBehaviour {
 					currentlyHeld.transform.SetParent (Camera.main.transform);
 					currentRB = currentlyHeld.GetComponent<Rigidbody> ();
 					currentRB.isKinematic = true;
-					currentRB.detectCollisions = false;
+					//currentRB.detectCollisions = false;
 //					currentColliders = currentlyHeld.GetComponentsInChildren<Collider> ();
 //					foreach(Collider col in currentColliders) {
 //						col.enabled = false;
@@ -55,9 +55,11 @@ public class holdSwitch : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonUp(0)) {
-			currentlyHeld.transform.SetParent (null);
-			currentRB.isKinematic = false;
-			currentRB.detectCollisions = true;
+			if (currentlyHeld != null) {
+				currentlyHeld.transform.SetParent (null);
+				currentRB.isKinematic = false;
+				//currentRB.detectCollisions = true;
+			}
 		}
 	}
 }
