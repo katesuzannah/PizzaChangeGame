@@ -25,23 +25,14 @@ public class holdSwitch : MonoBehaviour {
 				currentlyHeld.transform.SetParent (null);
 				currentRB.isKinematic = false;
 				currentRB.detectCollisions = true;
-//				foreach(Collider col in currentColliders) {
-//					col.enabled = true;
-//				}
 			}
 			//If the ray hits something on the layer mask
 			if (Physics.Raycast (ray, out rayHit, 5f, myRaycastMask)) {
 				if (rayHit.collider.tag == "Pickup") {
-					Debug.Log("YE");
 					currentlyHeld = rayHit.collider.gameObject;
-					//currentlyHeld.transform.position = transform.position;
 					currentlyHeld.transform.SetParent (Camera.main.transform);
 					currentRB = currentlyHeld.GetComponent<Rigidbody> ();
 					currentRB.isKinematic = true;
-					//currentRB.detectCollisions = false;
-//					currentColliders = currentlyHeld.GetComponentsInChildren<Collider> ();
-//					foreach(Collider col in currentColliders) {
-//						col.enabled = false;
 //					}
 				}
 				if (rayHit.collider.tag == "Drawer") {
@@ -51,6 +42,9 @@ public class holdSwitch : MonoBehaviour {
 				if (rayHit.collider.tag == "Door") {
 					rayHit.collider.GetComponent<OpenDoor> ().OnClick ();
 				}
+				if (rayHit.collider.tag == "Money") {
+					rayHit.collider.gameObject.GetComponent<Money> ().Collect ();
+				}
 			}
 		}
 
@@ -58,7 +52,6 @@ public class holdSwitch : MonoBehaviour {
 			if (currentlyHeld != null) {
 				currentlyHeld.transform.SetParent (null);
 				currentRB.isKinematic = false;
-				//currentRB.detectCollisions = true;
 			}
 		}
 	}
