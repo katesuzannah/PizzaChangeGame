@@ -15,10 +15,12 @@ public class playerMovement : MonoBehaviour {
 	float journeyLength;
 	float startTime;
 	public float crouchLerpSpeed;
+	public bool uncrouching;
 
 	void Start () {
 		playerCharCon = GetComponent<CharacterController>();
 		standY = Camera.main.transform.localPosition.y;
+		uncrouching = false;
 	}
 	
 
@@ -32,17 +34,24 @@ public class playerMovement : MonoBehaviour {
 
 		//Crouch
 		if (Input.GetKeyDown(KeyCode.C)) {
+			uncrouching = false;
 			startTime = Time.time;
 			journeyLength = Vector3.Distance (Camera.main.transform.localPosition, new Vector3 (Camera.main.transform.localPosition.x, crouchY, Camera.main.transform.localPosition.z));
 		}
 		if (Input.GetKey(KeyCode.C)) {
-			//Camera.main.transform.localPosition = new Vector3 (Camera.main.transform.localPosition.x, crouchY, Camera.main.transform.localPosition.z);
 			distCovered = (Time.time - startTime) * crouchLerpSpeed;
 			fracJourney = distCovered / journeyLength;
 			Camera.main.transform.localPosition = Vector3.Lerp (Camera.main.transform.localPosition, new Vector3 (Camera.main.transform.localPosition.x, crouchY, Camera.main.transform.localPosition.z), fracJourney);
 		}
-		else {
-			Camera.main.transform.localPosition = new Vector3 (Camera.main.transform.localPosition.x, standY, Camera.main.transform.localPosition.z);
+		if (Input.GetKeyUp(KeyCode.C)) {
+			startTime = Time.time;
+			journeyLength = Vector3.Distance (Camera.main.transform.localPosition, new Vector3 (Camera.main.transform.localPosition.x, standY, Camera.main.transform.localPosition.z));
+			uncrouching = true;
+		}
+		if (uncrouching) {
+			distCovered = (Time.time - startTime) * crouchLerpSpeed;
+			fracJourney = distCovered / journeyLength;
+			Camera.main.transform.localPosition = Vector3.Lerp (Camera.main.transform.localPosition, new Vector3 (Camera.main.transform.localPosition.x, standY, Camera.main.transform.localPosition.z), fracJourney);
 		}
 	}
 }
