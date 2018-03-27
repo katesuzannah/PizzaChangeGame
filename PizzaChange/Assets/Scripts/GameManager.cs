@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
 		else {
 			if (!doorbellRang) {
 				doorAudio.Play ();
+				doorbellRang = true;
 			}
 		}
 	}
